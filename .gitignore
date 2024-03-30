@@ -2,7 +2,7 @@
 *.d
 
 # Build files
-/build/
+build/
 
 # Compiled Object files
 *.slo
