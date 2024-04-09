@@ -4,6 +4,9 @@
 # Build files
 build/
 
+# LSP settings
+.clangd
+
 # Compiled Object files
 *.slo
 *.lo
