@@ -74,12 +74,12 @@ LRUCache<Key, Val>::LRUCache(LRUCache<Key, Val> &&cache) noexcept {
 
 template <typename Key, typename Val>
 auto LRUCache<Key, Val>::size() -> std::uint64_t {
-    return this->size;
+    return this->size_;
 }
 
 template <typename Key, typename Val>
 auto LRUCache<Key, Val>::ssize() -> long {
-    return static_cast<long>(this->size);
+    return static_cast<long>(this->size_);
 }
 
 } // namespace cache
