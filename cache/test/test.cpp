@@ -1,4 +1,5 @@
 #include "lrucache.hpp"
+#include "gtest/gtest.h"
 #include <cstdint>
 #include <gtest/gtest.h>
 #include <string>
@@ -11,12 +12,16 @@ struct TypeDefinitions {
     typedef Val val;
 };
 
-/* Class fixture test */
+/* Class fixture test for default constructor */
 template <typename types>
-class LRUCacheTest : public ::testing::Test {
+class LRUCacheDefaultConstructorTest : public ::testing::Test {
 protected:
-    LRUCacheTest()
+    LRUCacheDefaultConstructorTest()
         : _cache(cache::LRUCache<typename types::key, typename types::val>()) {}
+
+    void SetUp(std::uint64_t len) {
+        _cache = cache::LRUCache<typename types::key, typename types::val>(len);
+    }
 
     cache::LRUCache<typename types::key, typename types::val> _cache;
 };
@@ -24,14 +29,22 @@ protected:
 /* Defining types to test */
 using testing::Types;
 using String = std::string;
+
+template <typename T>
+using Vector = std::vector<T>;
+
 typedef Types<TypeDefinitions<int, String>, TypeDefinitions<String, String>,
-              TypeDefinitions<char, char>>
+              TypeDefinitions<char, char>, TypeDefinitions<float, double>,
+              TypeDefinitions<double, Vector<float>>>
     HashTypes;
 /* --------------- Test Setup Ends Here --------------- */
 
 /* Tests start here */
-TYPED_TEST_SUITE(LRUCacheTest, HashTypes);
+/* Default Constructor Tests */
+TYPED_TEST_SUITE(LRUCacheDefaultConstructorTest, HashTypes);
 
-TYPED_TEST(LRUCacheTest, BasicConstructor) {
-    ASSERT_NO_THROW({ this->_cache.size() == 5000; });
+TYPED_TEST(LRUCacheDefaultConstructorTest, BasicConstructor) {
+    ASSERT_EQ(this->_cache.size(), 5000);
+    ASSERT_NO_THROW(this->SetUp(57););
+    ASSERT_EQ(this->_cache.size(), 57);
 }
