@@ -34,6 +34,8 @@ public:
     LRUCache(const LRUCache &) noexcept;
     LRUCache(LRUCache &&) noexcept;
 
+    auto operator=(const LRUCache &) -> LRUCache &;
+
     auto emplace(Key, Val) -> void;
     auto insert(Pair<Key, Val>) -> void;
 
@@ -56,20 +58,37 @@ LRUCache<Key, Val>::LRUCache(std::uint64_t len) noexcept : size_(len) {}
 /* Copy Constructor */
 template <typename Key, typename Val>
 LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val> &cache) noexcept {
-    this->size = cache.size;
+    this->size_ = cache.size_;
     this->map = cache.map;
     for (const auto &it : cache.order) {
         Key key = it->first;
-        this->order.insert(this->map.find(key));
+        // this->order.insert(this->map.find(key));
     }
 }
 
 /* Move Constructor */
 template <typename Key, typename Val>
 LRUCache<Key, Val>::LRUCache(LRUCache<Key, Val> &&cache) noexcept {
-    this->size = cache.size;
+    this->size_ = cache.size_;
     this->map = cache.map;
     this->order = cache.order;
+}
+
+template <typename Key, typename Val>
+auto LRUCache<Key, Val>::operator=(const LRUCache<Key, Val> &other)
+    -> LRUCache<Key, Val> & {
+    if (this == &other) {
+        return *this;
+    }
+
+    this->size_ = other.size_;
+    this->map = other.map;
+    for (const auto &it : other.order) {
+        Key key = it->first;
+        // this->order.insert(this->map.find(key));
+    }
+
+    return *this;
 }
 
 template <typename Key, typename Val>
