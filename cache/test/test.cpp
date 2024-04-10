@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include <string>
 
+/* Default constructor */
 TEST(Constructor, default_constructor) {
     cache::LRUCache<int, std::string> lru;
 
