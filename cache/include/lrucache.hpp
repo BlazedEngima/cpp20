@@ -61,7 +61,7 @@ LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val> &cache) noexcept {
     this->size_ = cache.size_;
     this->map = cache.map;
     for (const auto &it : cache.order) {
-        Key key = it->first;
+        [[maybe_unused]] Key key = it->first;
         // this->order.insert(this->map.find(key));
     }
 }
@@ -85,7 +85,7 @@ auto LRUCache<Key, Val>::operator=(const LRUCache<Key, Val> &other)
     this->size_ = other.size_;
     this->map = other.map;
     for (const auto &it : other.order) {
-        Key key = it->first;
+        [[maybe_unused]] Key key = it->first;
         // this->order.insert(this->map.find(key));
     }
 
