@@ -37,18 +37,21 @@ public:
     auto emplace(Key, Val) -> void;
     auto insert(Pair<Key, Val>) -> void;
 
+    auto size() -> std::uint64_t;
+    auto ssize() -> long;
+
 private:
-    std::uint64_t size;
+    std::uint64_t size_;
     Dict<Key, Val> map;
     List<decltype(map.begin())> order;
 };
 
 /* Constructor */
 template <typename Key, typename Val>
-LRUCache<Key, Val>::LRUCache() noexcept : size(DEFAULT_SIZE) {}
+LRUCache<Key, Val>::LRUCache() noexcept : size_(DEFAULT_SIZE) {}
 
 template <typename Key, typename Val>
-LRUCache<Key, Val>::LRUCache(std::uint64_t len) noexcept : size(len) {}
+LRUCache<Key, Val>::LRUCache(std::uint64_t len) noexcept : size_(len) {}
 
 /* Copy Constructor */
 template <typename Key, typename Val>
@@ -67,6 +70,16 @@ LRUCache<Key, Val>::LRUCache(LRUCache<Key, Val> &&cache) noexcept {
     this->size = cache.size;
     this->map = cache.map;
     this->order = cache.order;
+}
+
+template <typename Key, typename Val>
+auto LRUCache<Key, Val>::size() -> std::uint64_t {
+    return this->size;
+}
+
+template <typename Key, typename Val>
+auto LRUCache<Key, Val>::ssize() -> long {
+    return static_cast<long>(this->size);
 }
 
 } // namespace cache
