@@ -111,12 +111,16 @@ auto LRUCache<Key, Val>::operator=(LRUCache<Key, Val> &&other) noexcept
     return *this;
 }
 
+/* Emplace new element */
 template <typename Key, typename Val>
 auto LRUCache<Key, Val>::emplace(const Key &key, const Val &val) -> void {
     auto [it, success] = this->map.emplace(key, val);
     if (!success) {
         return;
     }
+
+    this->keep_coherent();
+    this->order.push_front(it);
 }
 
 /* Getters for size */
@@ -130,9 +134,10 @@ auto LRUCache<Key, Val>::ssize() -> long {
     return static_cast<long>(this->size_);
 }
 
+/* Bounds checking on LRUCache */
 template <typename Key, typename Val>
 auto LRUCache<Key, Val>::keep_coherent() -> void {
-    if (this->map.size() < this->size_ || this->map.empty()) {
+    if (this->map.size() <= this->size_ || this->map.empty()) {
         return;
     }
 
