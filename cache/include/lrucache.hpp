@@ -109,6 +109,7 @@ auto LRUCache<Key, Val>::operator=(LRUCache<Key, Val> &&other) noexcept
     return *this;
 }
 
+/* Getters for size */
 template <typename Key, typename Val>
 auto LRUCache<Key, Val>::size() -> std::uint64_t {
     return this->size_;
