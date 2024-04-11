@@ -34,15 +34,15 @@ class LRUCache {
 public:
     LRUCache();
     LRUCache(std::size_t);
-    LRUCache(const LRUCache &);
-    LRUCache(LRUCache &&) noexcept;
+    LRUCache(const LRUCache&);
+    LRUCache(LRUCache&&) noexcept;
 
-    auto operator=(const LRUCache &) -> LRUCache &;
-    auto operator=(LRUCache &&) noexcept -> LRUCache &;
+    auto operator=(const LRUCache&) -> LRUCache&;
+    auto operator=(LRUCache&&) noexcept -> LRUCache&;
 
     template <typename... Args>
-    auto emplace(Args &&...) -> void;
-    auto insert(const Pair<Key, Val> &) -> void;
+    auto emplace(Args&&...) -> void;
+    auto insert(const Pair<Key, Val>&) -> void;
 
     auto size() noexcept -> std::size_t;
     auto ssize() noexcept -> std::ptrdiff_t;
@@ -66,10 +66,10 @@ LRUCache<Key, Val>::LRUCache(std::size_t len) : max_size(len) {}
 
 /* Copy Constructor */
 template <typename Key, typename Val>
-LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val> &cache) {
+LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val>& cache) {
     this->max_size = cache.max_size;
     this->map = cache.map;
-    for (const auto &it : cache.order) {
+    for (const auto& it : cache.order) {
         Key key = it->first;
         this->order.push_front(this->map.find(key));
     }
@@ -77,7 +77,7 @@ LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val> &cache) {
 
 /* Move Constructor */
 template <typename Key, typename Val>
-LRUCache<Key, Val>::LRUCache(LRUCache<Key, Val> &&cache) noexcept {
+LRUCache<Key, Val>::LRUCache(LRUCache<Key, Val>&& cache) noexcept {
     this->max_size = cache.max_size;
     this->map = std::move(cache.map);
     this->order = std::move(cache.order);
@@ -85,15 +85,15 @@ LRUCache<Key, Val>::LRUCache(LRUCache<Key, Val> &&cache) noexcept {
 
 /* Copy Assignment */
 template <typename Key, typename Val>
-auto LRUCache<Key, Val>::operator=(const LRUCache<Key, Val> &other)
-    -> LRUCache<Key, Val> & {
+auto LRUCache<Key, Val>::operator=(const LRUCache<Key, Val>& other)
+    -> LRUCache<Key, Val>& {
     if (this == &other) {
         return *this;
     }
 
     this->max_size = other.max_size;
     this->map = other.map;
-    for (const auto &it : other.order) {
+    for (const auto& it : other.order) {
         Key key = it->first;
         this->order.push_front(this->map.find(key));
     }
@@ -103,8 +103,8 @@ auto LRUCache<Key, Val>::operator=(const LRUCache<Key, Val> &other)
 
 /* Move assignment */
 template <typename Key, typename Val>
-auto LRUCache<Key, Val>::operator=(LRUCache<Key, Val> &&other) noexcept
-    -> LRUCache<Key, Val> & {
+auto LRUCache<Key, Val>::operator=(LRUCache<Key, Val>&& other) noexcept
+    -> LRUCache<Key, Val>& {
     if (this == &other) {
         return *this;
     }
@@ -119,7 +119,7 @@ auto LRUCache<Key, Val>::operator=(LRUCache<Key, Val> &&other) noexcept
 /* Emplace new element */
 template <typename Key, typename Val>
 template <typename... Args>
-auto LRUCache<Key, Val>::emplace(Args &&...args) -> void {
+auto LRUCache<Key, Val>::emplace(Args&&... args) -> void {
     auto [it, success] = this->map.emplace(std::forward<Args>(args)...);
     if (!success) {
         return;
