@@ -38,7 +38,7 @@ public:
     auto operator=(const LRUCache &) -> LRUCache &;
     auto operator=(LRUCache &&) noexcept -> LRUCache &;
 
-    auto emplace(Key, Val) -> void;
+    auto emplace(const Key &, const Val &) -> void;
     auto insert(Pair<Key, Val>) -> void;
 
     auto size() -> std::uint64_t;
@@ -48,6 +48,8 @@ private:
     std::uint64_t size_;
     Dict<Key, Val> map;
     List<decltype(map.begin())> order;
+
+    auto keep_coherent() -> void;
 };
 
 /* Constructor */
@@ -107,6 +109,14 @@ auto LRUCache<Key, Val>::operator=(LRUCache<Key, Val> &&other) noexcept
     this->order = std::move(other.order);
 
     return *this;
+}
+
+template <typename Key, typename Val>
+auto LRUCache<Key, Val>::emplace(const Key &key, const Val &val) -> void {
+    auto [it, success] = this->map.emplace(key, val);
+    if (!success) {
+        return;
+    }
 }
 
 /* Getters for size */
