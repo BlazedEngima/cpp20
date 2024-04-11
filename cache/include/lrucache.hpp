@@ -154,7 +154,7 @@ auto LRUCache<Key, Val>::scapacity() noexcept -> std::ptrdiff_t {
 /* Bounds checking on LRUCache */
 template <typename Key, typename Val>
 auto LRUCache<Key, Val>::keep_coherent() -> void {
-    if (this->map.size() <= this->size_ || this->map.empty()) {
+    if (this->map.size() <= this->max_size || this->map.empty()) {
         return;
     }
 
