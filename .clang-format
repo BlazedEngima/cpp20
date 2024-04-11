@@ -1,8 +1,11 @@
----
-Language: Cpp
 BasedOnStyle: LLVM
 IndentWidth: 4
+---
+Language: Cpp
 AlwaysBreakTemplateDeclarations: Yes
 AllowShortFunctionsOnASingleLine: All
 AccessModifierOffset: -4
 SpaceBeforeCpp11BracedList: true
+DerivePointerAlignment: false
+PointerAlignment: Left
+AllowAllParametersOfDeclarationOnNextLine: false
