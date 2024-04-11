@@ -50,5 +50,5 @@ TYPED_TEST(LRUCacheTest, BasicConstructor) {
         (std::is_same_v<decltype(this->_cache.scapacity()), std::ptrdiff_t>));
 
     this->SetUp(57);
-    ASSERT_EQ(this->_cache.capacity(), 57);
+    EXPECT_EQ(this->_cache.capacity(), 57);
 }
