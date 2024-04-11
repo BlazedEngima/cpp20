@@ -24,7 +24,7 @@ using String = std::string;
 template <typename T>
 using Vector = std::vector<T>;
 
-/* Class fixture test for default constructor */
+/* Class fixture test for typed test with default constructor */
 template <typename types>
 class LRUCacheTest : public ::testing::Test {
 protected:
@@ -38,6 +38,7 @@ protected:
     cache::LRUCache<typename types::key, typename types::val> _cache;
 };
 
+/* Class fixture test for functioanl tests */
 class LRUCacheFunctionTest : public ::testing::Test {
 protected:
     void SetUp() override {}
@@ -48,6 +49,7 @@ protected:
     cache::LRUCache<int, Vector<String>> container_cache;
 };
 
+/* Inherited classes for different test suites */
 template <typename types>
 class LRUEmplaceTestInt : public LRUCacheTest<types> {};
 
@@ -63,7 +65,7 @@ class LRUEmplaceTestCharInt : public LRUCacheTest<types> {};
 template <typename types>
 class LRUEmplaceTestContainer : public LRUCacheTest<types> {};
 
-/* Creating factory functions */
+/* Creating type traits for special types */
 template <typename T>
 struct is_string_type : std::false_type {};
 
@@ -80,6 +82,7 @@ T construct(char arg) {
     return arg;
 }
 
+/* typedefs for TYPED_TEST */
 typedef Types<TypeDefinitions<int, String>, TypeDefinitions<String, String>,
               TypeDefinitions<char, char>, TypeDefinitions<float, double>,
               TypeDefinitions<double, Vector<int>>>
