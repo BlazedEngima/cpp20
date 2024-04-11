@@ -72,8 +72,8 @@ LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val> &cache) {
 template <typename Key, typename Val>
 LRUCache<Key, Val>::LRUCache(LRUCache<Key, Val> &&cache) noexcept {
     this->size_ = cache.size_;
-    this->map = cache.map;
-    this->order = cache.order;
+    this->map = std::move(cache.map);
+    this->order = std::move(cache.order);
 }
 
 /* Copy Assignment */
