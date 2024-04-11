@@ -130,6 +130,17 @@ auto LRUCache<Key, Val>::ssize() -> long {
     return static_cast<long>(this->size_);
 }
 
+template <typename Key, typename Val>
+auto LRUCache<Key, Val>::keep_coherent() -> void {
+    if (this->map.size() < this->size_ || this->map.empty()) {
+        return;
+    }
+
+    auto last = this->order.back();
+    this->map.erase(last);
+    this->order.pop_back();
+}
+
 } // namespace cache
 
 #endif // LRU_CACHE_H
