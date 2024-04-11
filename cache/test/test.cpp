@@ -45,6 +45,6 @@ TYPED_TEST_SUITE(LRUCacheDefaultConstructorTest, HashTypes);
 
 TYPED_TEST(LRUCacheDefaultConstructorTest, BasicConstructor) {
     ASSERT_EQ(this->_cache.size(), 5000);
-    ASSERT_NO_THROW(this->SetUp(57););
+    this->SetUp(57);
     ASSERT_EQ(this->_cache.size(), 57);
 }
