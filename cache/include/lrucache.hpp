@@ -29,9 +29,9 @@ using Pair = std::pair<Key, Val>;
 template <typename Key, typename Val>
 class LRUCache {
 public:
-    LRUCache() noexcept;
-    LRUCache(std::uint64_t) noexcept;
-    LRUCache(const LRUCache &) noexcept;
+    LRUCache();
+    LRUCache(std::uint64_t);
+    LRUCache(const LRUCache &);
     LRUCache(LRUCache &&) noexcept;
 
     auto operator=(const LRUCache &) -> LRUCache &;
@@ -50,14 +50,14 @@ private:
 
 /* Constructor */
 template <typename Key, typename Val>
-LRUCache<Key, Val>::LRUCache() noexcept : size_(DEFAULT_SIZE) {}
+LRUCache<Key, Val>::LRUCache() : size_(DEFAULT_SIZE) {}
 
 template <typename Key, typename Val>
-LRUCache<Key, Val>::LRUCache(std::uint64_t len) noexcept : size_(len) {}
+LRUCache<Key, Val>::LRUCache(std::uint64_t len) : size_(len) {}
 
 /* Copy Constructor */
 template <typename Key, typename Val>
-LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val> &cache) noexcept {
+LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val> &cache) {
     this->size_ = cache.size_;
     this->map = cache.map;
     for (const auto &it : cache.order) {
