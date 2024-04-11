@@ -2,8 +2,10 @@
 #define LRU_CACHE_H
 
 #include <concepts>
+#include <cstddef>
 #include <cstdint>
 #include <functional>
+#include <iterator>
 #include <list>
 #include <unordered_map>
 
@@ -41,8 +43,8 @@ public:
     auto emplace(const Key &, const Val &) -> void;
     auto insert(Pair<Key, Val>) -> void;
 
-    auto size() -> std::uint64_t;
-    auto ssize() -> long;
+    auto size() noexcept -> std::size_t;
+    auto ssize() noexcept -> std::ptrdiff_t;
 
 private:
     std::uint64_t size_;
@@ -125,13 +127,13 @@ auto LRUCache<Key, Val>::emplace(const Key &key, const Val &val) -> void {
 
 /* Getters for size */
 template <typename Key, typename Val>
-auto LRUCache<Key, Val>::size() -> std::uint64_t {
-    return this->size_;
+auto LRUCache<Key, Val>::size() noexcept -> std::size_t {
+    return this->map.size();
 }
 
 template <typename Key, typename Val>
-auto LRUCache<Key, Val>::ssize() -> long {
-    return static_cast<long>(this->size_);
+auto LRUCache<Key, Val>::ssize() noexcept -> std::ptrdiff_t {
+    return std::ssize(this->map);
 }
 
 /* Bounds checking on LRUCache */
