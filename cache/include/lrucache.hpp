@@ -67,7 +67,7 @@ LRUCache<Key, Val>::LRUCache(std::size_t len) : max_size(len) {}
 /* Copy Constructor */
 template <typename Key, typename Val>
 LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val> &cache) {
-    this->size_ = cache.size_;
+    this->max_size = cache.max_size;
     this->map = cache.map;
     for (const auto &it : cache.order) {
         Key key = it->first;
@@ -78,7 +78,7 @@ LRUCache<Key, Val>::LRUCache(const LRUCache<Key, Val> &cache) {
 /* Move Constructor */
 template <typename Key, typename Val>
 LRUCache<Key, Val>::LRUCache(LRUCache<Key, Val> &&cache) noexcept {
-    this->size_ = cache.size_;
+    this->max_size = cache.max_size;
     this->map = std::move(cache.map);
     this->order = std::move(cache.order);
 }
@@ -91,7 +91,7 @@ auto LRUCache<Key, Val>::operator=(const LRUCache<Key, Val> &other)
         return *this;
     }
 
-    this->size_ = other.size_;
+    this->max_size = other.max_size;
     this->map = other.map;
     for (const auto &it : other.order) {
         Key key = it->first;
@@ -109,7 +109,7 @@ auto LRUCache<Key, Val>::operator=(LRUCache<Key, Val> &&other) noexcept
         return *this;
     }
 
-    this->size_ = other.size_;
+    this->max_size = other.max_size;
     this->map = std::move(other.map);
     this->order = std::move(other.order);
 
