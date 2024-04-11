@@ -18,9 +18,9 @@ concept Hashable = requires(Key key) {
     { std::hash<Key> {}(key) } -> std::convertible_to<std::size_t>;
 };
 
-template <typename Key, typename Value>
+template <typename Key, typename Val>
     requires Hashable<Key>
-using Dict = std::unordered_map<Key, Value>;
+using Dict = std::unordered_map<Key, Val>;
 
 template <typename T>
 using List = std::list<T>;
@@ -40,8 +40,9 @@ public:
     auto operator=(const LRUCache &) -> LRUCache &;
     auto operator=(LRUCache &&) noexcept -> LRUCache &;
 
-    auto emplace(const Key &, const Val &) -> void;
-    auto insert(Pair<Key, Val>) -> void;
+    template <typename... Args>
+    auto emplace(Args &&...) -> void;
+    auto insert(const Pair<Key, Val> &) -> void;
 
     auto size() noexcept -> std::size_t;
     auto ssize() noexcept -> std::ptrdiff_t;
@@ -115,8 +116,9 @@ auto LRUCache<Key, Val>::operator=(LRUCache<Key, Val> &&other) noexcept
 
 /* Emplace new element */
 template <typename Key, typename Val>
-auto LRUCache<Key, Val>::emplace(const Key &key, const Val &val) -> void {
-    auto [it, success] = this->map.emplace(key, val);
+template <typename... Args>
+auto LRUCache<Key, Val>::emplace(Args &&...args) -> void {
+    auto [it, success] = this->map.emplace(std::forward<Args>(args)...);
     if (!success) {
         return;
     }
