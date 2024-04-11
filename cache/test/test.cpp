@@ -14,9 +14,9 @@ struct TypeDefinitions {
 
 /* Class fixture test for default constructor */
 template <typename types>
-class LRUCacheDefaultConstructorTest : public ::testing::Test {
+class LRUCacheTest : public ::testing::Test {
 protected:
-    LRUCacheDefaultConstructorTest()
+    LRUCacheTest()
         : _cache(cache::LRUCache<typename types::key, typename types::val>()) {}
 
     void SetUp(std::uint64_t len) {
@@ -41,9 +41,9 @@ typedef Types<TypeDefinitions<int, String>, TypeDefinitions<String, String>,
 
 /* Tests start here */
 /* Default Constructor Tests */
-TYPED_TEST_SUITE(LRUCacheDefaultConstructorTest, HashTypes);
+TYPED_TEST_SUITE(LRUCacheTest, HashTypes);
 
-TYPED_TEST(LRUCacheDefaultConstructorTest, BasicConstructor) {
+TYPED_TEST(LRUCacheTest, BasicConstructor) {
     ASSERT_EQ(this->_cache.capacity(), 5000);
     ASSERT_EQ(this->_cache.scapacity(), 5000);
     EXPECT_TRUE(
