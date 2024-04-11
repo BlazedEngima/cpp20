@@ -44,7 +44,7 @@ typedef Types<TypeDefinitions<int, String>, TypeDefinitions<String, String>,
 TYPED_TEST_SUITE(LRUCacheDefaultConstructorTest, HashTypes);
 
 TYPED_TEST(LRUCacheDefaultConstructorTest, BasicConstructor) {
-    ASSERT_EQ(this->_cache.size(), 5000);
+    ASSERT_EQ(this->_cache.capacity(), 5000);
     this->SetUp(57);
-    ASSERT_EQ(this->_cache.size(), 57);
+    ASSERT_EQ(this->_cache.capacity(), 57);
 }
