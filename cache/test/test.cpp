@@ -45,6 +45,10 @@ TYPED_TEST_SUITE(LRUCacheDefaultConstructorTest, HashTypes);
 
 TYPED_TEST(LRUCacheDefaultConstructorTest, BasicConstructor) {
     ASSERT_EQ(this->_cache.capacity(), 5000);
+    ASSERT_EQ(this->_cache.scapacity(), 5000);
+    EXPECT_TRUE(
+        (std::is_same_v<decltype(this->_cache.scapacity()), std::ptrdiff_t>));
+
     this->SetUp(57);
     ASSERT_EQ(this->_cache.capacity(), 57);
 }
