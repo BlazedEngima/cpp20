@@ -1,6 +1,7 @@
 #ifndef LRU_CACHE_H
 #define LRU_CACHE_H
 
+#include <concepts>
 #include <cstdint>
 #include <functional>
 #include <list>
@@ -35,6 +36,7 @@ public:
     LRUCache(LRUCache &&) noexcept;
 
     auto operator=(const LRUCache &) -> LRUCache &;
+    auto operator=(LRUCache &&) noexcept -> LRUCache &;
 
     auto emplace(Key, Val) -> void;
     auto insert(Pair<Key, Val>) -> void;
@@ -88,6 +90,21 @@ auto LRUCache<Key, Val>::operator=(const LRUCache<Key, Val> &other)
         [[maybe_unused]] Key key = it->first;
         // this->order.insert(this->map.find(key));
     }
+
+    return *this;
+}
+
+/* Move assignment */
+template <typename Key, typename Val>
+auto LRUCache<Key, Val>::operator=(LRUCache<Key, Val> &&other) noexcept
+    -> LRUCache<Key, Val> & {
+    if (this == &other) {
+        return *this;
+    }
+
+    this->size_ = other.size_;
+    this->map = std::move(other.map);
+    this->order = std::move(other.order);
 
     return *this;
 }
