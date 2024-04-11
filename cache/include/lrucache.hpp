@@ -46,6 +46,8 @@ public:
 
     auto size() noexcept -> std::size_t;
     auto ssize() noexcept -> std::ptrdiff_t;
+    auto capacity() noexcept -> std::size_t;
+    auto scapacity() noexcept -> std::ptrdiff_t;
 
 private:
     std::size_t max_size;
@@ -136,6 +138,17 @@ auto LRUCache<Key, Val>::size() noexcept -> std::size_t {
 template <typename Key, typename Val>
 auto LRUCache<Key, Val>::ssize() noexcept -> std::ptrdiff_t {
     return std::ssize(this->map);
+}
+
+/* Getters for max size */
+template <typename Key, typename Val>
+auto LRUCache<Key, Val>::capacity() noexcept -> std::size_t {
+    return this->map.max_size;
+}
+
+template <typename Key, typename Val>
+auto LRUCache<Key, Val>::scapacity() noexcept -> std::ptrdiff_t {
+    return static_cast<std::ptrdiff_t>(this->max_size);
 }
 
 /* Bounds checking on LRUCache */
