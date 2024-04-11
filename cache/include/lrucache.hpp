@@ -9,9 +9,9 @@
 #include <list>
 #include <unordered_map>
 
-#define DEFAULT_SIZE 5000
-
 namespace cache {
+
+static constexpr std::size_t default_size = 5000;
 
 template <typename Key>
 concept Hashable = requires(Key key) {
@@ -33,7 +33,7 @@ template <typename Key, typename Val>
 class LRUCache {
 public:
     LRUCache();
-    LRUCache(std::uint64_t);
+    LRUCache(std::size_t);
     LRUCache(const LRUCache &);
     LRUCache(LRUCache &&) noexcept;
 
@@ -47,7 +47,7 @@ public:
     auto ssize() noexcept -> std::ptrdiff_t;
 
 private:
-    std::uint64_t size_;
+    std::size_t max_size;
     Dict<Key, Val> map;
     List<decltype(map.begin())> order;
 
@@ -56,10 +56,10 @@ private:
 
 /* Constructor */
 template <typename Key, typename Val>
-LRUCache<Key, Val>::LRUCache() : size_(DEFAULT_SIZE) {}
+LRUCache<Key, Val>::LRUCache() : max_size(default_size) {}
 
 template <typename Key, typename Val>
-LRUCache<Key, Val>::LRUCache(std::uint64_t len) : size_(len) {}
+LRUCache<Key, Val>::LRUCache(std::size_t len) : max_size(len) {}
 
 /* Copy Constructor */
 template <typename Key, typename Val>
