@@ -143,7 +143,7 @@ auto LRUCache<Key, Val>::ssize() noexcept -> std::ptrdiff_t {
 /* Getters for max size */
 template <typename Key, typename Val>
 auto LRUCache<Key, Val>::capacity() noexcept -> std::size_t {
-    return this->map.max_size;
+    return this->max_size;
 }
 
 template <typename Key, typename Val>
